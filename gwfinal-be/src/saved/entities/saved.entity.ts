@@ -6,4 +6,3 @@ export class Saved implements Prisma.savedUncheckedCreateInput {
   post_id: number;
   saved_date?: Date;
 }
-``;

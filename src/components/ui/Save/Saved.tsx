@@ -15,14 +15,18 @@ export const Saved = ({ userId, postId }: Post) => {
   const { user } = useAuth();
 
   const handleSavePost = async () => {
-    if (isSaving || isSaved) return;
+  
 
-    setIsSaving(true);
+  
 
     try {
       await savedService.createSavedPost(postId, userId);
-      setIsSaved(true);
-      toast.success("Post saved successfully!");
+      setIsSaved(!isSaved);
+      if(!isSaved){
+        toast.success("Post saved successfully!");
+      }else{
+        toast.success("remove saved successfully!");
+      }
     } catch (error) {
       console.error("Failed to save the post:", error);
       toast.error("Failed to perform save operation.");

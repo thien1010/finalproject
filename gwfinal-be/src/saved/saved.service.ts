@@ -27,10 +27,24 @@ export class SavedService {
       if (!post) {
         throw new NotFoundException('Post not found');
       }
-      return await this.prisma.saved.create({
-        data: {
+      const saved = await this.prisma.saved.findFirst({
+        where: {
           user_id: userId,
           post_id: postId,
+        },
+      });
+      console.log(saved);
+      if (!saved) {
+        return await this.prisma.saved.create({
+          data: {
+            user_id: userId,
+            post_id: postId,
+          },
+        });
+      }
+      return await this.prisma.saved.delete({
+        where: {
+          saved_id: saved.saved_id,
         },
       });
     } catch (error) {
